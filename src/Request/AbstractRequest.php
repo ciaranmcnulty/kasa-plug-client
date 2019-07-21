@@ -15,7 +15,7 @@ abstract class AbstractRequest {
     const BASE_API_ENDPOINT = 'https://%swap.tplinkcloud.com';
 
     /** @var Client */
-    private $kasa;
+    protected $kasa;
 
     /** @var string */
     private $method;

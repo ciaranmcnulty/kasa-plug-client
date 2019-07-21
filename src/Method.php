@@ -8,5 +8,6 @@ class Method extends Enum {
 
     const LOGIN = 'login';
     const DEVICE_LIST = 'getDeviceList';
+    const PASSTHROUGH = 'passthrough';
 
 }

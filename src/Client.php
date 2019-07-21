@@ -3,6 +3,8 @@
 namespace Guym4c\Kasa;
 
 use Exception;
+use Guym4c\Kasa\Model\Plug;
+use Guym4c\Kasa\Request\DevicesRequest;
 use Guym4c\Kasa\Request\LoginRequest;
 
 class Client {
@@ -32,6 +34,7 @@ class Client {
         $this->token = (new LoginRequest($this, $this->user, $this->pass))
             ->getResponse()->token;
 
+        $this->plugs = (new DevicesRequest($this))->getResponse();
     }
 
     /**
@@ -46,5 +49,19 @@ class Client {
      */
     public function getPlugs(): array {
         return $this->plugs;
+    }
+
+    /**
+     * @param string $search
+     * @return Plug|null
+     */
+    public function getPlug(string $search): ?Plug {
+
+        foreach ($this->plugs as $plug) {
+            if ($plug->alias == $search ||
+                $plug->deviceId == $search)
+                return $plug;
+        }
+        return null;
     }
 }

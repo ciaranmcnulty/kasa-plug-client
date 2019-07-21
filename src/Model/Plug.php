@@ -2,7 +2,14 @@
 
 namespace Guym4c\Kasa\Model;
 
+use Guym4c\Kasa\Client;
+use Guym4c\Kasa\KasaApiException;
+use Guym4c\Kasa\Request\RelayStateRequest;
+
 class Plug extends AbstractModel {
+
+    /** @var Client */
+    protected $kasa;
 
     /** @var string */
     public $firmwareVersion;
@@ -49,7 +56,9 @@ class Plug extends AbstractModel {
     /** @var string */
     public $deviceHardwareVersion;
 
-    public function __construct(array $json) {
+    public function __construct(Client $kasa, array $json) {
+        $this->kasa = $kasa;
+
         $this->firmwareVersion = $json['fwVer'];
         unset($json['fwVer']);
 
@@ -62,6 +71,15 @@ class Plug extends AbstractModel {
         $matches = [];
         preg_match("/https:\/\/([a-z0-9]+)-wap\.tplinkcloud\.com/", $this->appServerUrl, $matches);
         return $matches[1];
+    }
+
+    /**
+     * @param bool $on
+     * @return bool
+     * @throws KasaApiException
+     */
+    public function setState(bool $on): bool {
+        return (new RelayStateRequest($this->kasa, $this, $on))->getResponse();
     }
 
 }
