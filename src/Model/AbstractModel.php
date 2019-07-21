@@ -4,11 +4,11 @@ namespace Guym4c\Kasa\Model;
 
 abstract class AbstractModel {
 
-    protected static function hydrate(AbstractModel $model, array $json): void {
-        foreach (get_object_vars($model) as $property => $value) {
+    protected function hydrate(array $json): void {
+        foreach (get_object_vars($this) as $property => $value) {
 
             if (empty($value))
-                $model->{$property} = $json[$property] ?? null;
+                $this->{$property} = $json[$property] ?? null;
         }
     }
 }

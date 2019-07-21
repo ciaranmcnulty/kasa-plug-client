@@ -26,7 +26,8 @@ class Account extends AbstractModel {
      */
     public function __construct(array $json) {
         $this->regTime = new DateTime($json['regTime']);
-        self::hydrate($this, $json);
+
+        $this->hydrate($json);
     }
 
 }

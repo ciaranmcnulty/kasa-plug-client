@@ -8,6 +8,7 @@ use Guym4c\Kasa\KasaApiException;
 use GuzzleHttp;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\RequestOptions;
 
 abstract class AbstractRequest {
 
@@ -55,15 +56,15 @@ abstract class AbstractRequest {
                 : "{$region}-")));
 
         if (!empty($this->kasa->getToken()))
-            $this->request = $this->request->withHeader('Authorization', 'Bearer ' . $this->kasa->getToken());
+            $this->options[RequestOptions::QUERY]['token'] = $this->kasa->getToken();
 
-        $this->options['json']['method'] = $method;
+        $this->options[RequestOptions::JSON]['method'] = $method;
 
         if (!empty($params))
-            $this->options['json']['params'] = $params;
+            $this->options[RequestOptions::JSON]['params'] = $params;
 
         if (!empty($requestData))
-            $this->options['json']['requestData'] = json_encode($requestData);
+            $this->options[RequestOptions::JSON]['requestData'] = json_encode($requestData);
 
     }
 
