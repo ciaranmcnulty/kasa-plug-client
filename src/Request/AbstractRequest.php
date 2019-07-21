@@ -45,6 +45,7 @@ abstract class AbstractRequest {
      */
     public function __construct(Client $kasa, string $method, ?string $region = null, array $params = [], array $requestData = []) {
         $this->kasa = $kasa;
+        $this->http = new GuzzleHttp\Client();
         $this->method = $method;
         $this->params = $params;
         $this->requestData = $requestData;
@@ -64,7 +65,7 @@ abstract class AbstractRequest {
             $this->options[RequestOptions::JSON]['params'] = $params;
 
         if (!empty($requestData))
-            $this->options[RequestOptions::JSON]['requestData'] = json_encode($requestData);
+            $this->options[RequestOptions::JSON]['params']['requestData'] = json_encode($requestData);
 
     }
 
@@ -82,7 +83,7 @@ abstract class AbstractRequest {
             throw KasaApiException::fromGuzzle($e);
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return json_decode($response->getBody()->getContents(), true)['result'];
     }
 
 }

@@ -35,6 +35,7 @@ class RelayStateRequest extends AbstractRequest {
      */
     public function getResponse(): bool {
 
-        return (bool) ($this->execute())['responseData']['system']['set_relay_state']['err_code'];
+        $responseData = json_decode(($this->execute())['responseData'], true);
+        return (bool) $responseData['system']['set_relay_state']['err_code'];
     }
 }

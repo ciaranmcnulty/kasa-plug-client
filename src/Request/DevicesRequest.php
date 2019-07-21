@@ -32,7 +32,7 @@ class DevicesRequest extends AbstractRequest {
 
         $plugs = [];
 
-        foreach ($json['result']['deviceList'] as $plug) {
+        foreach ($json['deviceList'] as $plug) {
             $plugs[] = new Plug($this->kasa, $plug);
         }
 

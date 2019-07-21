@@ -79,7 +79,12 @@ class Plug extends AbstractModel {
      * @throws KasaApiException
      */
     public function setState(bool $on): bool {
-        return (new RelayStateRequest($this->kasa, $this, $on))->getResponse();
+        $success = !(new RelayStateRequest($this->kasa, $this, $on))->getResponse();
+
+        if ($success)
+            $this->status = $on ? 1 : 0;
+
+        return $success;
     }
 
 }
