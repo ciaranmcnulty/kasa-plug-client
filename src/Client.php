@@ -59,8 +59,9 @@ class Client {
 
         foreach ($this->plugs as $plug) {
             if ($plug->alias == $search ||
-                $plug->deviceId == $search)
+                $plug->deviceId == $search) {
                 return $plug;
+            }
         }
         return null;
     }

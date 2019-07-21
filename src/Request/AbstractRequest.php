@@ -56,16 +56,19 @@ abstract class AbstractRequest {
                 ? ''
                 : "{$region}-")));
 
-        if (!empty($this->kasa->getToken()))
+        if (!empty($this->kasa->getToken())) {
             $this->options[RequestOptions::QUERY]['token'] = $this->kasa->getToken();
+        }
 
         $this->options[RequestOptions::JSON]['method'] = $method;
 
-        if (!empty($params))
+        if (!empty($params)) {
             $this->options[RequestOptions::JSON]['params'] = $params;
+        }
 
-        if (!empty($requestData))
+        if (!empty($requestData)) {
             $this->options[RequestOptions::JSON]['params']['requestData'] = json_encode($requestData);
+        }
 
     }
 

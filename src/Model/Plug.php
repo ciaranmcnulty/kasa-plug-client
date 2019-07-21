@@ -81,8 +81,9 @@ class Plug extends AbstractModel {
     public function setState(bool $on): bool {
         $success = !(new RelayStateRequest($this->kasa, $this, $on))->getResponse();
 
-        if ($success)
+        if ($success) {
             $this->status = $on ? 1 : 0;
+        }
 
         return $success;
     }
